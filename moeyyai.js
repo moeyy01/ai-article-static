@@ -163,4 +163,6 @@ function checkURLAndRun() {
   }
 }
 
-checkURLAndRun();
+document.addEventListener('pjax:complete', function () {
+  checkURLAndRun()
+  })
