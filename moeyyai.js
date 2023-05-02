@@ -163,6 +163,6 @@ function checkURLAndRun() {
   }
 }
 
-document.addEventListener('pjax:complete', function () {
+document.addEventListener('pjax', function () {
   checkURLAndRun()
   })
