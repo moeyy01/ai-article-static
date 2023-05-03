@@ -87,14 +87,14 @@ var MoeyyAI = {
   
   fetchMoeyyAI: async function(content) {
     const url = window.location.href;
-    const apiUrl = `https://moeyy.cn/ai-article-api/api/response?url=${url}`;
+    const apiUrl = `https://moeyy.cn/ai-article-api/api/response?url=${url}`; //缓存key: Url
     const blogdata = `${content}`
     const timeout = 60000; // 设置超时时间（毫秒）
   
     try {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), timeout);
-        const data = {currentModel: "gpt-3.5-turbo", message: '请帮我用简短的话总结一下下面这篇文章: '+blogdata};
+        const data = {message: blogdata};
         const response = await fetch(apiUrl, {
           method: 'POST',
           signal: controller.signal,
@@ -106,14 +106,7 @@ var MoeyyAI = {
         if (response.ok) {
           const data = await response.text();
           return data;
-        } else {
-            if (response.status === 402) {
-                document.querySelectorAll('.post-MoeyyAI').forEach(el => {
-                    el.style.display = 'none';
-                });
-            }
-            throw new Error('MoeyyAI：余额不足，请充值后请求新的文章');
-        }
+        } 
     } catch (error) {
             console.error('请求失败：', error);
             return '获取文章摘要失败，请稍后再试。';
